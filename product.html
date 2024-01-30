@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        #products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #2874f0;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1e5ea9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Product Display</h1>
+    </header>
+
+    <div id="products">
+        <div class="product" data-id="1" data-name="Product 1" data-price="19.99">
+            <h2>Product 1</h2>
+            <p>Description: Lorem ipsum dolor sit amet.</p>
+            <p>Price: $19.99</p>
+            <button onclick="addToCart(this)">Add to Cart</button>
+        </div>
+        
+        <div class="product" data-id="2" data-name="Product 2" data-price="29.99">
+            <h2>Product 2</h2>
+            <p>Description: Consectetur adipiscing elit.</p>
+            <p>Price: $29.99</p>
+            <button onclick="addToCart(this)">Add to Cart</button>
+        </div>
+
+        <!-- Add more products here -->
+    </div>
+
+    <script>
+        function addToCart(button) {
+            var product = button.parentNode;
+            var productId = product.dataset.id;
+            var productName = product.dataset.name;
+            var productPrice = parseFloat(product.dataset.price);
+
+            // Call a function to add the product to the cart
+            addProductToCart(productId, productName, productPrice);
+        }
+
+        // This function can be extended to perform AJAX requests to add the product to the cart on the server-side.
+        function addProductToCart(id, name, price) {
+            // For simplicity, let's assume there's a global array for the cart
+            var cart = [];
+            cart.push({ id: id, name: name, price: price, quantity: 1 });
+
+            // Store the updated cart in localStorage or send it to the server
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Redirect to the cart screen
+            window.location.href = 'cart.html';
+        }
+    </script>
+</body>
+</html>

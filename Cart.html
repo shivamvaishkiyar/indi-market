@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        #cart-items {
+            width: 60%;
+            margin-top: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .product-info img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #ff9900;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e68a00;
+        }
+
+        #total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #checkout-btn {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Shopping Cart</h1>
+    </header>
+
+    <div id="cart-items"></div>
+
+    <div id="total">Total: $0.00</div>
+
+    <button id="checkout-btn" onclick="checkout()">Checkout</button>
+
+    <script>
+        function renderCart() {
+            var cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            cart.forEach(function(item) {
+                var cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+
+                var productInfoElement = document.createElement('div');
+                productInfoElement.className = 'product-info';
+
+                // You can fetch product images and other details from a database
+                var productImage = document.createElement('mobile.png');
+                productImage.src = 'mobile.jpg';
+                productImage.alt = item.name;
+
+                var productName = document.createElement('span');
+                productName.textContent = item.name;
+
+                productInfoElement.appendChild(productImage);
+                productInfoElement.appendChild(productName);
+
+                var quantity = document.createElement('span');
+                quantity.textContent = 'Quantity: ' + item.quantity;
+
+                var totalPrice = document.createElement('span');
+                totalPrice.textContent = 'Total: $' + (item.price * item.quantity).toFixed(2);
+
+                cartItemElement.appendChild(productInfoElement);
+                cartItemElement.appendChild(quantity);
+                cartItemElement.appendChild(totalPrice);
+
+                cartItemsContainer.appendChild(cartItemElement);
+            });
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var totalElement = document.getElementById('total');
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            var total = cart.reduce(function(acc, item) {
+                return acc + item.price * item.quantity;
+            }, 0);
+            totalElement.textContent = 'Total: $' + total.toFixed(2);
+        }
+
+        function checkout() {
+            alert('Redirecting to checkout page...');
+            // You can implement the actual checkout logic here
+        }
+
+        // Initial rendering
+        renderCart();
+    </script>
+</body>
+</html>
